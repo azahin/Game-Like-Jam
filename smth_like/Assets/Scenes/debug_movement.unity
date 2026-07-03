@@ -881,13 +881,9 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4930365232505949701, guid: 556c43e8d1d6755f18cd207a67454283, type: 3}
-      propertyPath: lookInput
-      value: 
-      objectReference: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-    - target: {fileID: 4930365232505949701, guid: 556c43e8d1d6755f18cd207a67454283, type: 3}
-      propertyPath: moveInput
-      value: 
-      objectReference: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+      propertyPath: walkSpeed
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
