@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour {
     private CharacterController controller;
     private Transform pivot;
-    private Vector3 moveDirection;
     private float pan;
     private float tilt;
 
@@ -27,39 +26,25 @@ public class PlayerMovement : MonoBehaviour {
         tilt = pivot.localEulerAngles.x;
     }
 
-    void OnEnable() {
-        moveInput.action.performed += HorizontalMovement;
-        moveInput.action.canceled += CancelMovement;
-        lookInput.action.performed += CameraMovement;
-    }
-
-    void OnDisable() {
-        moveInput.action.performed -= HorizontalMovement;
-        moveInput.action.canceled -= CancelMovement;
-        lookInput.action.performed -= CameraMovement;
-    }
-
     // --- Movement Logic --- //
     void Update() {
-        Vector3 velocity;
-        velocity = transform.forward * moveDirection.y + transform.right * moveDirection.x;
+        CameraMovement(lookInput.action.ReadValue<Vector2>());
+
+        Vector3 totalVelocity = Vector3.zero;
+        totalVelocity += GetHorizontalVelocity(moveInput.action.ReadValue<Vector2>());
+        controller.Move(totalVelocity * Time.deltaTime);
+    }
+
+    private Vector3 GetHorizontalVelocity(Vector2 moveDirection) {
+        Vector3 velocity = transform.forward * moveDirection.y + transform.right * moveDirection.x;
         velocity.y = 0.0f;
         velocity = walkSpeed * velocity.normalized;
-        controller.Move(velocity * Time.deltaTime);
+        return velocity;
     }
 
-    private void HorizontalMovement(InputAction.CallbackContext ctx) {
-        moveDirection = ctx.ReadValue<Vector2>();
-    }
-
-    private void CancelMovement(InputAction.CallbackContext ctx) {
-        moveDirection = Vector3.zero;
-    }
-
-    private void CameraMovement(InputAction.CallbackContext ctx) {
-        Vector2 rawInput = ctx.ReadValue<Vector2>();
-        pan += InputManager.Instance.Sensitivity * rawInput.x;
-        tilt -= InputManager.Instance.Sensitivity * rawInput.y;
+    private void CameraMovement(Vector2 lookInput) {
+        pan += InputManager.Instance.Sensitivity * lookInput.x;
+        tilt -= InputManager.Instance.Sensitivity * lookInput.y;
         tilt = Mathf.Clamp(tilt, viewClamp.x, viewClamp.y);
 
         transform.rotation = Quaternion.Euler(0.0f, pan, 0.0f);
