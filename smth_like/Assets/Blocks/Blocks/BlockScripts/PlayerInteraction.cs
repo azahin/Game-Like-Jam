@@ -34,7 +34,8 @@ public class PlayerInteraction : MonoBehaviour
         {
             blockInteraction = true;
             Debug.Log("Placed");
-            worldManager.CreateContainer();
+            WhatAmILookingAt();
+            worldManager.CreateContainer(blockSelected);
 
         }
         if (destoryBlock.IsPressed() && !blockInteraction)
@@ -51,8 +52,10 @@ public class PlayerInteraction : MonoBehaviour
 
         if (identifyBlock.IsPressed() && WhatAmILookingAt())
         {
-           Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(Vector3.forward) * blockSelected.distance, Color.yellow);
-           Debug.Log(blockSelected.transform.name);
+            Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(Vector3.forward) * blockSelected.distance, Color.yellow);
+            //Debug.Log(blockSelected.point);
+            //Debug.Log(blockSelected.normal);
+            Debug.Log(blockSelected.transform.name);
         }
     }
 

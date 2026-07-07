@@ -31,25 +31,26 @@ public class WorldManager : MonoBehaviour
         
     }
 
-    public void CreateContainer()
+    public void CreateContainer(RaycastHit voxelBase)
     {
+        Vector3 newPos = voxelBase.normal + voxelBase.transform.GetComponent<Container>().containerPos; //Get face of where you want to place, add to container position
         GameObject baseContainer = new GameObject("BaseContainer" + blockNumber);
         baseContainer.transform.parent = transform;
         container = baseContainer.AddComponent<Container>();
 
-        container.Initialize(worldMaterial2, Vector3.zero);
-        container.GenerateMesh(new Vector3(Random.Range(0, 2), Random.Range(0, 2), Random.Range(0, 2)));
+        container.Initialize(worldMaterial2, newPos);
+        container.GenerateMesh(newPos);
         container.UploadMesh();
 
         blockNumber++;
     }
 
-    public void DestroyContainer(Transform voxel)
+    public void DestroyContainer(Transform voxelDestoryed)
     {
         
         //Transform[] holder = gameObject.GetComponentsInChildren<Transform>();
-        Destroy(voxel.gameObject);
-        Debug.Log("Destoryed block " + voxel.name);
+        Destroy(voxelDestoryed.gameObject);
+        Debug.Log("Destoryed block " + voxelDestoryed.name);
         blockNumber--;
 
     }
