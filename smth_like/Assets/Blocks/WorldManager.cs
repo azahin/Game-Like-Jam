@@ -44,12 +44,12 @@ public class WorldManager : MonoBehaviour
         blockNumber++;
     }
 
-    public void DestroyContainer()
+    public void DestroyContainer(Transform voxel)
     {
         
-        Transform[] holder = gameObject.GetComponentsInChildren<Transform>();
-        Destroy(holder[blockNumber + 1].gameObject);
-        Debug.Log("Destoryed block " + blockNumber);
+        //Transform[] holder = gameObject.GetComponentsInChildren<Transform>();
+        Destroy(voxel.gameObject);
+        Debug.Log("Destoryed block " + voxel.name);
         blockNumber--;
 
     }
