@@ -1,14 +1,22 @@
 using System.ComponentModel;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
+using UnityEngine.VFX;
 
 public class PlayerInteraction : MonoBehaviour
 {
     InputAction placeBlock;
     InputAction destoryBlock;
     InputAction identifyBlock;
+
+    //Player Inputs
+    [SerializeField] private InputActionReference blockInput;
+    [SerializeField] private InputActionReference placeInput;
+    [SerializeField] private InputActionReference breakInput;
+    [SerializeField] private InputActionReference inspectInput;
 
     private bool blockInteraction;
 
@@ -23,47 +31,60 @@ public class PlayerInteraction : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        placeBlock = InputSystem.actions.FindAction("Place");
-        destoryBlock = InputSystem.actions.FindAction("Attack");
-        identifyBlock = InputSystem.actions.FindAction("Interact");
+        blockId = 1;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void OnEnable()
     {
-        if (placeBlock.IsPressed() && !blockInteraction)
-        {
-            blockInteraction = true;
-            Debug.Log("Placed");
-            WhatAmILookingAt();
-            worldManager.CreateContainer(blockSelected);
+        blockInput.action.performed += SelectBlock;
+        blockInput.action.canceled -= SelectBlock;
 
-        }
-        if (destoryBlock.IsPressed() && !blockInteraction)
-        {
-            blockInteraction = true;
-            Debug.Log("Destoryed");
-            WhatAmILookingAt();
-            worldManager.DestroyContainer(blockSelected.transform);
-        }
-        if (!placeBlock.IsPressed() && !destoryBlock.IsPressed())
-        {
-            blockInteraction = false;
-        }
+        placeInput.action.performed += PlaceBlock;
+        placeInput.action.canceled -= PlaceBlock;
 
-        if (identifyBlock.IsPressed() && WhatAmILookingAt())
-        {
-            Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(Vector3.forward) * blockSelected.distance, Color.yellow);
-            //Debug.Log(blockSelected.point);
-            //Debug.Log(blockSelected.normal);
-            Debug.Log(blockSelected.transform.name);
-        }
+        breakInput.action.performed += BreakBlock;
+        breakInput.action.canceled -= BreakBlock;
+
+        inspectInput.action.performed += CheckBlock;
+        inspectInput.action.canceled -= CheckBlock;
     }
+
+    
 
     private bool WhatAmILookingAt()
     {
         return Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(Vector3.forward), out blockSelected, Mathf.Infinity);
     }
 
-    public 
-}
+    private void SelectBlock(InputAction.CallbackContext ctx)
+    {
+
+        blockId = (byte) ctx.action.GetBindingIndexForControl(ctx.control);
+        Debug.Log(blockId);
+    }
+
+    private void PlaceBlock(InputAction.CallbackContext ctx)
+    {
+        Debug.Log("Placed");
+        WhatAmILookingAt();
+        worldManager.CreateContainer(blockSelected, blockId);
+    }
+
+    private void BreakBlock(InputAction.CallbackContext ctx)
+    {
+        Debug.Log("Destoryed");
+        WhatAmILookingAt();
+        worldManager.DestroyContainer(blockSelected.transform);
+    }
+
+    private void CheckBlock(InputAction.CallbackContext ctx)
+    {
+        Debug.DrawRay(cam.transform.position, cam.transform.TransformDirection(Vector3.forward) * blockSelected.distance, Color.yellow);
+        //Debug.Log(blockSelected.point);
+        //Debug.Log(blockSelected.normal);
+        Debug.Log(blockSelected.transform.name);
+    }
+
+
+ }
+

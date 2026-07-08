@@ -603,8 +603,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3eb534aac44ce409a78738206ac7c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldManager
-  worldMaterial: {fileID: 2100000, guid: 4443d299316a70f48ab32265ad6d2b9f, type: 2}
-  worldMaterial2: {fileID: 2100000, guid: 14626106a24d9164c9b7d7eaef19d97b, type: 2}
+  workingMaterial:
+  - {fileID: 2100000, guid: 4443d299316a70f48ab32265ad6d2b9f, type: 2}
+  - {fileID: 2100000, guid: 14626106a24d9164c9b7d7eaef19d97b, type: 2}
+  - {fileID: 2100000, guid: 6afb0fc8553d0574eb45d7a4f92e83ff, type: 2}
+  - {fileID: 2100000, guid: 9e760467791e7a94f93edeea85c11664, type: 2}
   blockNumber: 0
 --- !u!1 &791816961
 GameObject:
@@ -1238,6 +1241,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f076cbff6335746afc01d1f013277c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
+  blockInput: {fileID: 4688244821840758575, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  placeInput: {fileID: 208999224014030998, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  breakInput: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  inspectInput: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  blockId: 0
   worldManager: {fileID: 705309820}
   cam: {fileID: 1389225358}
 --- !u!1660057539 &9223372036854775807
