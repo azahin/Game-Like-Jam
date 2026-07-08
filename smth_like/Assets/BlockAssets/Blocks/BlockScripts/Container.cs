@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
@@ -16,6 +17,8 @@ public class Container : MonoBehaviour
     private MeshCollider meshCollider;
 
     MeshData meshData = new MeshData();
+
+    public GameObject trigger = Resources.Load<GameObject>("Assets/BlockAssets/Blocks/BlockPrefabs/TriggerBlock");
     
 
     public void Initialize(Material mat, Vector3 pos)
@@ -38,7 +41,12 @@ public class Container : MonoBehaviour
         meshData.ClearData();
 
         Vector3 blockPos = initPos;
-        Voxel block = new Voxel() { Id = blockId };
+        Voxel block = new Voxel()
+        {
+            Id = blockId,
+            currentPos = initPos,
+            triggerBlock = trigger
+        };
 
         int count = 0;
         Vector3[] faceVertices = new Vector3[4];
