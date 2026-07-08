@@ -21,7 +21,7 @@ public class WorldManager : MonoBehaviour
         container = baseContainer.AddComponent<Container>();
 
         container.Initialize(worldMaterial, Vector3.zero);
-        container.GenerateMesh(Vector3.zero);
+        container.GenerateMesh(Vector3.zero, 1);
         container.UploadMesh();
     }
 

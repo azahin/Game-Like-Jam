@@ -13,6 +13,7 @@ public class PlayerInteraction : MonoBehaviour
     private bool blockInteraction;
 
     RaycastHit blockSelected;
+    public byte blockId;
 
 
     [SerializeField] WorldManager worldManager; //This will be swapped to the player object when that's done
@@ -63,4 +64,6 @@ public class PlayerInteraction : MonoBehaviour
     {
         return Physics.Raycast(cam.transform.position, cam.transform.TransformDirection(Vector3.forward), out blockSelected, Mathf.Infinity);
     }
+
+    public 
 }

@@ -33,12 +33,12 @@ public class Container : MonoBehaviour
     }
 
 
-    public void GenerateMesh(Vector3 initPos)
+    public void GenerateMesh(Vector3 initPos, byte blockId)
     {
         meshData.ClearData();
 
         Vector3 blockPos = initPos;
-        Voxel block = new Voxel() { Id = 1 };
+        Voxel block = new Voxel() { Id = blockId };
 
         int count = 0;
         Vector3[] faceVertices = new Vector3[4];
