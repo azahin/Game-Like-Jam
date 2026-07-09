@@ -7,6 +7,7 @@ using UnityEngine;
 public class WorldManager : MonoBehaviour
 {
     [SerializeField] private List<Material> workingMaterial;
+    [SerializeField] public GameObject triggerBlock;
 
     private Container container;
 
@@ -46,6 +47,8 @@ public class WorldManager : MonoBehaviour
         blockNumber++;
     }
 
+
+
     public void DestroyContainer(Transform voxelDestoryed)
     {
         
@@ -54,5 +57,17 @@ public class WorldManager : MonoBehaviour
         Debug.Log("Destoryed block " + voxelDestoryed.name);
         blockNumber--;
 
+    }
+
+    public void FactoryCheck(RaycastHit voxelBase)
+    {
+        List<RaycastHit> foundRays = new List<RaycastHit>();
+        foundRays = voxelBase.transform.GetComponent<Container>().MultiBlock1(voxelBase);
+        for (int i = 0; i < foundRays.Count; i++)
+        {
+
+            CreateContainer(foundRays[i], 2);
+            
+        }
     }
 }

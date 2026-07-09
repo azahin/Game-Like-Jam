@@ -542,7 +542,7 @@ Transform:
   m_GameObject: {fileID: 705309816}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.65046, y: 0, z: 3.40432}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -608,6 +608,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 14626106a24d9164c9b7d7eaef19d97b, type: 2}
   - {fileID: 2100000, guid: 6afb0fc8553d0574eb45d7a4f92e83ff, type: 2}
   - {fileID: 2100000, guid: 9e760467791e7a94f93edeea85c11664, type: 2}
+  triggerBlock: {fileID: 8660677710748285558, guid: 35673ae08501a8d4996d52d8c1c049e9, type: 3}
   blockNumber: 0
 --- !u!1 &791816961
 GameObject:
@@ -1245,6 +1246,7 @@ MonoBehaviour:
   placeInput: {fileID: 208999224014030998, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   breakInput: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   inspectInput: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  factoryInput: {fileID: 888885338226431582, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   blockId: 0
   worldManager: {fileID: 705309820}
   cam: {fileID: 1389225358}

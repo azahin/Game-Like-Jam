@@ -17,6 +17,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private InputActionReference placeInput;
     [SerializeField] private InputActionReference breakInput;
     [SerializeField] private InputActionReference inspectInput;
+    [SerializeField] private InputActionReference factoryInput;
 
     private bool blockInteraction;
 
@@ -47,6 +48,9 @@ public class PlayerInteraction : MonoBehaviour
 
         inspectInput.action.performed += CheckBlock;
         inspectInput.action.canceled -= CheckBlock;
+
+        factoryInput.action.performed += StartFactory;
+        factoryInput.action.canceled -= StartFactory;
     }
 
     
@@ -83,6 +87,12 @@ public class PlayerInteraction : MonoBehaviour
         //Debug.Log(blockSelected.point);
         //Debug.Log(blockSelected.normal);
         Debug.Log(blockSelected.transform.name);
+    }
+
+    private void StartFactory(InputAction.CallbackContext ctx)
+    {
+        WhatAmILookingAt();
+        worldManager.FactoryCheck(blockSelected);
     }
 
 

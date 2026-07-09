@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -18,14 +19,16 @@ public class Container : MonoBehaviour
 
     MeshData meshData = new MeshData();
 
-    public GameObject trigger = Resources.Load<GameObject>("Assets/BlockAssets/Blocks/BlockPrefabs/TriggerBlock");
-    
+    public GameObject trigger;
+
+    public Voxel activeBlock;
 
     public void Initialize(Material mat, Vector3 pos)
     {
         ConfigureComponents();
         meshRenderer.sharedMaterial = mat;
         containerPos = pos;
+        trigger = gameObject.GetComponentInParent<WorldManager>().triggerBlock;
     }
 
     private void ConfigureComponents()
@@ -41,7 +44,7 @@ public class Container : MonoBehaviour
         meshData.ClearData();
 
         Vector3 blockPos = initPos;
-        Voxel block = new Voxel()
+        activeBlock = new Voxel()
         {
             Id = blockId,
             currentPos = initPos,
@@ -88,6 +91,43 @@ public class Container : MonoBehaviour
             meshCollider.sharedMesh = meshData.mesh;
         }
     }
+
+    #region MultiBlock
+
+    public List<RaycastHit> MultiBlock1(RaycastHit origin)
+    {
+        Vector3[] ScanRadius = new Vector3[4];
+        ScanRadius[0] = new Vector3(1, 0, 0);
+        ScanRadius[1] = new Vector3(0, 0, 1);
+        ScanRadius[2] = new Vector3(-1, 0, 0);
+        ScanRadius[3] = new Vector3(0, 0, -1);
+
+        Vector3 offset = new Vector3(0.5f, 0, 0.5f);
+
+        List<RaycastHit> blocksFound = new List<RaycastHit>();
+        RaycastHit blockFound;
+
+        for (int i = 0; i < 4; i++)
+        {
+            bool holder;
+            //gameObject.transform.GetComponentInParent<WorldManager>().CreateTriggers(gameObject.transform, ScanRadius[i], 1);
+            holder = Physics.Raycast(gameObject.transform.position + offset, ScanRadius[i], out blockFound, 2);
+
+            //activeBlock.multi1Active = gameObject.transform.parent.Find("TriggerContainer").GetComponent<MultiCheck>().Collide;
+            if (holder)
+            {
+               
+                blocksFound.Add(blockFound);
+               
+            }
+            
+        }
+
+        return blocksFound;
+    }
+
+    #endregion
+
 
     #region Voxels
 

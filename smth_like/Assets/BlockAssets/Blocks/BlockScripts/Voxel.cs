@@ -1,4 +1,6 @@
 using NUnit.Framework;
+using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public struct Voxel
@@ -17,27 +19,15 @@ public struct Voxel
         }
     }
 
-
-    public void MultiBlock1()
+    public byte getID
     {
-        Vector3[] ScanRadius = new Vector3[4];
-        ScanRadius[0] = new Vector3(2, 0, 0);
-        ScanRadius[1] = new Vector3(0, 0, 2);
-        ScanRadius[2] = new Vector3(-2, 0, 0);
-        ScanRadius[3] = new Vector3(0, 0, -2);
-
-        for (int i = 0; i < 4; i++)
+        get
         {
-            GameObject temp = triggerBlock;
-            temp.transform.position = ScanRadius[i] + currentPos;
-            temp.SetActive(true);
-
-            if (temp.GetComponent<MultiCheck>().Collide)
-            {
-                multi1Active = true;
-            }
-            
+            return Id;
         }
-        
     }
+
+    
+
+
 }
