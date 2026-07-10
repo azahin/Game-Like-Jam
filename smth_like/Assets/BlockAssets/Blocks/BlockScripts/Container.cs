@@ -114,7 +114,7 @@ public class Container : MonoBehaviour
             holder = Physics.Raycast(gameObject.transform.position + offset, ScanRadius[i], out blockFound, 2);
 
             //activeBlock.multi1Active = gameObject.transform.parent.Find("TriggerContainer").GetComponent<MultiCheck>().Collide;
-            if (holder)
+            if (holder && blockFound.transform.GetComponent<Container>().activeBlock.Id == 1)
             {
                
                 blocksFound.Add(blockFound);

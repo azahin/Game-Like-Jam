@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -15,6 +16,8 @@ public class WorldManager : MonoBehaviour
 
     private GameObject blocks;
 
+    List<RaycastHit> factoriesActive = new List<RaycastHit>();
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,7 +33,15 @@ public class WorldManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        for (int i = 0; i < factoriesActive.Count; i++)
+        {
+            FactoryCheck(factoriesActive[i]);
+        }
+    }
+
+    private void LateUpdate()
+    {
+       
     }
 
     public void CreateContainer(RaycastHit voxelBase, byte blockId)
@@ -63,11 +74,15 @@ public class WorldManager : MonoBehaviour
     {
         List<RaycastHit> foundRays = new List<RaycastHit>();
         foundRays = voxelBase.transform.GetComponent<Container>().MultiBlock1(voxelBase);
-        for (int i = 0; i < foundRays.Count; i++)
+        if (foundRays.Count > 0)
         {
+            factoriesActive.Add(voxelBase);
+            for (int i = 0; i < foundRays.Count; i++)
+            {
+                CreateContainer(foundRays[i], 2);
 
-            CreateContainer(foundRays[i], 2);
-            
+            }
         }
+        
     }
 }
