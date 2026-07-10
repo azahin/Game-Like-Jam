@@ -112,9 +112,9 @@ public class Container : MonoBehaviour
             bool holder;
             //gameObject.transform.GetComponentInParent<WorldManager>().CreateTriggers(gameObject.transform, ScanRadius[i], 1);
             holder = Physics.Raycast(gameObject.transform.position + offset, ScanRadius[i], out blockFound, 2);
-
+            Debug.Log("Distance: " + blockFound.distance);
             //activeBlock.multi1Active = gameObject.transform.parent.Find("TriggerContainer").GetComponent<MultiCheck>().Collide;
-            if (holder && blockFound.transform.GetComponent<Container>().activeBlock.Id == 1)
+            if (holder && (blockFound.transform.GetComponent<Container>().activeBlock.Id == 1 || blockFound.transform.GetComponent<Container>().activeBlock.Id == 2) && blockFound.distance >= 1.5)
             {
                
                 blocksFound.Add(blockFound);

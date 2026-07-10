@@ -3,12 +3,15 @@ using NUnit.Framework.Constraints;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WorldManager : MonoBehaviour
 {
     [SerializeField] private List<Material> workingMaterial;
     [SerializeField] public GameObject triggerBlock;
+
+    private int tickNumber = 0;
 
     private Container container;
 
@@ -33,15 +36,22 @@ public class WorldManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < factoriesActive.Count; i++)
+        Debug.Log(factoriesActive.Count);
+        for (int i = 0; i < factoriesActive.Count && tickNumber == 120; i++)
         {
             FactoryCheck(factoriesActive[i]);
+
         }
+        if (tickNumber == 120)
+        {
+            tickNumber = 0;
+        }
+        tickNumber++;
     }
 
     private void LateUpdate()
     {
-       
+        
     }
 
     public void CreateContainer(RaycastHit voxelBase, byte blockId)
@@ -72,17 +82,34 @@ public class WorldManager : MonoBehaviour
 
     public void FactoryCheck(RaycastHit voxelBase)
     {
+      
         List<RaycastHit> foundRays = new List<RaycastHit>();
-        foundRays = voxelBase.transform.GetComponent<Container>().MultiBlock1(voxelBase);
+        foundRays = voxelBase.transform.GetComponent<Container>().MultiBlock1(voxelBase); //Get a list of found valid multiblock structres to produce blocks in
         if (foundRays.Count > 0)
         {
-            factoriesActive.Add(voxelBase);
             for (int i = 0; i < foundRays.Count; i++)
             {
-                CreateContainer(foundRays[i], 2);
+                if (foundRays[i].transform.GetComponent<Container>().activeBlock.Id == 1)
+                {
+                    CreateContainer(foundRays[i], 2);
+                }
+               
 
             }
+            foreach (RaycastHit hit in factoriesActive) //Make sure the same source block doesn't get added to the tick update multiple times. Ask abrar for help
+            {
+                if (hit.transform != voxelBase.transform)
+                {
+                    factoriesActive.Add(voxelBase);
+                }
+            }
+            if (factoriesActive.Count <= 0)
+            {
+                factoriesActive.Add(voxelBase);
+            }
         }
+        else { factoriesActive.Remove(voxelBase); }
+
         
     }
 }
