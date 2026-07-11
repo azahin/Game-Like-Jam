@@ -19,7 +19,7 @@ public class Container : MonoBehaviour
 
     MeshData meshData = new MeshData();
 
-    public GameObject trigger;
+
 
     public Voxel activeBlock;
 
@@ -28,7 +28,7 @@ public class Container : MonoBehaviour
         ConfigureComponents();
         meshRenderer.sharedMaterial = mat;
         containerPos = pos;
-        trigger = gameObject.GetComponentInParent<WorldManager>().triggerBlock;
+      
     }
 
     private void ConfigureComponents()
@@ -48,7 +48,7 @@ public class Container : MonoBehaviour
         {
             Id = blockId,
             currentPos = initPos,
-            triggerBlock = trigger
+            
         };
 
         int count = 0;
@@ -94,37 +94,7 @@ public class Container : MonoBehaviour
 
     #region MultiBlock
 
-    public List<RaycastHit> MultiBlock1(RaycastHit origin)
-    {
-        Vector3[] ScanRadius = new Vector3[4];
-        ScanRadius[0] = new Vector3(1, 0, 0);
-        ScanRadius[1] = new Vector3(0, 0, 1);
-        ScanRadius[2] = new Vector3(-1, 0, 0);
-        ScanRadius[3] = new Vector3(0, 0, -1);
-
-        Vector3 offset = new Vector3(0.5f, 0, 0.5f);
-
-        List<RaycastHit> blocksFound = new List<RaycastHit>();
-        RaycastHit blockFound;
-
-        for (int i = 0; i < 4; i++)
-        {
-            bool holder;
-            //gameObject.transform.GetComponentInParent<WorldManager>().CreateTriggers(gameObject.transform, ScanRadius[i], 1);
-            holder = Physics.Raycast(gameObject.transform.position + offset, ScanRadius[i], out blockFound, 2);
-            Debug.Log("Distance: " + blockFound.distance);
-            //activeBlock.multi1Active = gameObject.transform.parent.Find("TriggerContainer").GetComponent<MultiCheck>().Collide;
-            if (holder && (blockFound.transform.GetComponent<Container>().activeBlock.Id == 1 || blockFound.transform.GetComponent<Container>().activeBlock.Id == 2) && blockFound.distance >= 1.5)
-            {
-               
-                blocksFound.Add(blockFound);
-               
-            }
-            
-        }
-
-        return blocksFound;
-    }
+    
 
     #endregion
 
